@@ -1,25 +1,29 @@
-const Customer = require('./lib/customer'),
-  Company = require('./lib/company'),
-  Currency = require('./lib/currency'),
-  Employee = require('./lib/employee'),
-  UserFile = require('./lib/userFile'),
-  ResourceGroup = require('./lib/resourceGroup'),
-  Supplier = require('./lib/supplier'),
-  SalesTerritory = require('./lib/salesTerritory'),
-  Jobs = require('./lib/jobs'),
-  JobOperations = require('./lib/jobOperations'),
-  ServiceBase = require('./lib/serviceBase'),
-  Labor = require('./lib/labor'),
-  LaborApproval = require('./lib/laborApproval'),
-  SalesOrder = require('./lib/salesOrder'),
-  Task = require('./lib/task'),
-  OrderJobWiz = require('./lib/orderJobWiz'),
-  BAQ = require('./lib/baq'),
-  Connection = require('./lib/connection'),
-  PurchaseOrder = require('./lib/purchaseOrder'),
-  DynamicQuery = require('./lib/dynamicQuery');
+const FindStream = require('./lib/utils/FindStream');
+const SyncStream = require('./lib/utils/SyncStream');
+/* leave this space here, because merge conflicts */
 
-function Epicor({serverUrl, username, password, company, strictSSL}) {
+const BAQ = require('./lib/baq');
+const Company = require('./lib/company');
+const Connection = require('./lib/connection');
+const Currency = require('./lib/currency');
+const Customer = require('./lib/customer');
+const DynamicQuery = require('./lib/dynamicQuery');
+const Employee = require('./lib/employee');
+const JobOperations = require('./lib/jobOperations');
+const Jobs = require('./lib/jobs');
+const Labor = require('./lib/labor');
+const LaborApproval = require('./lib/laborApproval');
+const OrderJobWiz = require('./lib/orderJobWiz');
+const PurchaseOrder = require('./lib/purchaseOrder');
+const ResourceGroup = require('./lib/resourceGroup');
+const SalesOrder = require('./lib/salesOrder');
+const SalesTerritory = require('./lib/salesTerritory');
+const ServiceBase = require('./lib/serviceBase');
+const Supplier = require('./lib/supplier');
+const Task = require('./lib/task');
+const UserFile = require('./lib/userFile');
+
+function Epicor({ serverUrl, username, password, company, strictSSL }) {
   const connection = new Connection({
     serverUrl,
     username,
@@ -29,8 +33,8 @@ function Epicor({serverUrl, username, password, company, strictSSL}) {
   });
 
   this.getConnection = () => connection;
-  this.setConnectionCompany = company => {
-    connection.company = company;
+  this.setConnectionCompany = (_company) => {
+    connection.company = _company;
   };
   this.getConnectionCompany = () => connection.company;
   this.Currency = new Currency(connection);
@@ -87,6 +91,11 @@ function Epicor({serverUrl, username, password, company, strictSSL}) {
   this.Company = new Company(connection);
   this.PurchaseOrder = new PurchaseOrder(connection);
   this.DynamicQuery = new DynamicQuery(connection);
+
+
+  /* leave this space here. */
+  this.FindStream = FindStream;
+  this.SyncStream = SyncStream;
 }
 
 module.exports = Epicor;
